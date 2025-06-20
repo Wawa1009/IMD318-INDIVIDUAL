@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Complete Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #bab3e1, #ffd6ec);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 700px;
+      perspective: 1000px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background: #fff0f5;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 30px;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .card-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .card-container:hover .card {
+      transform: rotateY(180deg);
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #ffb6b9;
+      margin-bottom: 20px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #ff6f91;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 16px;
+      color: #ff8fab;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      background: #ffb6b9;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background: #ff6f91;
+    }
+
+    .tab-btn.active {
+      background: #ff6f91;
+      font-weight: bold;
+    }
+
+    /* Content Sections */
+    .content-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+      text-align: left;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Common Section Styles */
+    .section-title {
+      font-size: 20px;
+      color: #ff6f91;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .info-item {
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(255, 182, 185, 0.2);
+      margin-bottom: 15px;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #ff6f91;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .info-content {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Skills Specific */
+    .skill-category {
+      margin-bottom: 15px;
+    }
+
+    .skill-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .skill-name {
+      font-weight: 500;
+    }
+
+    .skill-level {
+      width: 60%;
+      height: 8px;
+      background: #ffe3e3;
+      border-radius: 4px;
+      margin-top: 3px;
+    }
+
+    .skill-level-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: #ff6f91;
+    }
+
+    /* Experience Specific */
+    .experience-item {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .experience-item::before {
+      content: "•";
+      position: absolute;
+      left: 10px;
+      color: #ff6f91;
+      font-size: 20px;
+    }
+
+    .experience-period {
+      font-size: 12px;
+      color: #ff8fab;
+      font-style: italic;
+    }
+
+    /* Family Specific */
+    .family-member {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .family-member::before {
+      position: absolute;
+      left: 15px;
+      font-size: 20px;
+    }
+
+    .father::before { content: "👨"; }
+    .mother::before { content: "👩"; }
+    .sister::before { content: "👧"; }
+    .brother::before { content: "👦"; }
+
+    /* Favorites Specific */
+    .favorite-item {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .favorite-item::before {
+      position: absolute;
+      left: 15px;
+      font-size: 20px;
+    }
+
+    .food::before { content: "🍔"; }
+    .music::before { content: "🎵"; }
+    .movie::before { content: "🎬"; }
+    .hobby::before { content: "🎨"; }
+    .book::before { content: "📚"; }
+    .place::before { content: "✈️"; }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ffb6b9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background-color: #ff6f91;
+      transform: scale(1.1);
+    }
+
+    .flip-instruction {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #ff8fab;
+      font-size: 14px;
+      opacity: 0.7;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-face card-front">
+        <img src="fox smile.jpg" alt="Profile" class="profile-pic">
+        <h1>HELLO!!! HELLO!!!</h1>
+        <div class="title">MY PROFILE HERE!!</div>
+        <p>Hover over me to see my complete profile!</p>
+        <div class="flip-instruction">👆 Hover to flip 👆</div>
+      </div>
+      
+      <div class="card-face card-back">
+        <img src="my photo.jpg" alt="Profile" class="profile-pic">
+        
+        <div class="nav-tabs">
+          <button class="tab-btn active" onclick="showTab('biodata')">Biodata</button>
+          <button class="tab-btn" onclick="showTab('skills')">Skills</button>
+          <button class="tab-btn" onclick="showTab('experience')">Experience</button>
+          <button class="tab-btn" onclick="showTab('education')">Education</button>
+          <button class="tab-btn" onclick="showTab('family')">Family</button>
+          <button class="tab-btn" onclick="showTab('favorites')">Favorites</button>
+        </div>
+        
+        <!-- Biodata Section -->
+        <div id="biodata" class="content-section active">
+          <h2 class="section-title">My Biodata</h2>
+          <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <span class="info-content">NurFarhanah Najwa Binti Muhamad Hanafi</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Date of Birth:</span>
+            <span class="info-content">10 September 2004</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Age:</span>
+            <span class="info-content">21 years</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Hobbies:</span>
+            <span class="info-content">Singing, Reading, Playing Games</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Contact:</span>
+            <span class="info-content">019-3692703<br>najwanurfarhanah4@gmail.com</span>
+          </div>
+        </div>
+        
+        <!-- Skills Section -->
+        <div id="skills" class="content-section">
+          <h2 class="section-title">My Skills</h2>
+          <div class="info-item skill-category">
+            <div class="info-label">Technical Skills</div>
+            <div class="skill-item">
+              <span class="skill-name">HTML/CSS</span>
+              <div class="skill-level"><div class="skill-level-fill" style="width: 90%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">JavaScript</span>
+              <div class="skill-level"><div class="skill-level-fill" style="width: 75%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Graphic Design</span>
+              <div class="skill-level"><div class="skill-level-fill" style="width: 85%"></div></div>
+            </div>
+          </div>
+          <div class="info-item skill-category">
+            <div class="info-label">Language Skills</div>
+            <div class="skill-item">
+              <span class="skill-name">Malay</span>
+              <div class="skill-level"><div class="skill-level-fill" style="width: 100%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">English</span>
+              <div class="skill-level"><div class="skill-level-fill" style="width: 80%"></div></div>
+            </div>
+          </div>
+          <div class="info-item skill-category">
+            <div class="info-label">Soft Skills</div>
+            <div class="info-content">Teamwork, Communication, Problem Solving, Creativity</div>
+          </div>
+        </div>
+        
+        <!-- Experience Section -->
+        <div id="experience" class="content-section">
+          <h2 class="section-title">My Experience</h2>
+          <div class="info-item">
+            <div class="info-label">Internship</div>
+            <div class="experience-period">10 Feb-4 April</div>
+            <div class="info-content">
+              <div class="experience-item">Designed and developed responsive websites</div>
+              <div class="experience-item">Collaborated with team on UX improvements</div>
+              <div class="experience-item">Created graphic assets for web projects</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Promoter</div>
+            <div class="experience-period">1 Month</div>
+            <div class="info-content">
+              <div class="experience-item">To make a promote products to customers</div>
+            </div>
+            <div class="info-item">
+            <div class="info-label">Bussiness Family</div>
+            <div class="experience-period">still operating</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Education Section -->
+       <div id="education" class="content-section">
+          <h2 class="section-title">My Education</h2>
+             <img src="logo tadika.jpeg" alt="education" class="education"width=100 height = 200>
+             <img src="sktu1.jpeg" alt="education" class="education"width=100 height = 200>
+             <img src="smk.jpg" alt="education" class="education"width=100 height = 200>
+             <img src="LOGO UITM.png" alt="education" class="education"width=100 height = 200>
+          <div class="info-item">
+            <div class="info-label">Tadika Ihsan(UTM)</div>
+            <div class="experience-period">2008-2010</div>
+            <div class="info-content">Universiti Teknologi Malaysia</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Sekolah Kebangasaan Taman Universiti 1</div>
+            <div class="experience-period">2011-2016</div>
+            <div class="info-content"></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Sekolah Menengah Kebangasaan Taman Universiti 1</div>
+            <div class="experience-period">2017-2021</div>
+            <div class="info-content">Being President club</div>
+            <div class="info-content">Being atlet for badminton</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Diploma in Information Management</div>
+            <div class="experience-period">2022 - Present</div>
+            <div class="info-content">University Technology MARA (UiTM)</div>
+          </div>
+        </div>
+        
+        
+        <!-- Family Section -->
+        <div id="family" class="content-section"> 
+            <img src="family.jpg" alt="family" class="family"width=400 height = 300>
+          <h2 class="section-title">My Family</h2>
+          <div class="info-item family-member father">
+            <div class="info-label">Father</div>
+            <div class="info-content">Muhamad Hanafi bin Kamat, 48</div>
+          </div>
+          <div class="info-item family-member mother">
+            <div class="info-label">Mother</div>
+            <div class="info-content">Jaslina binti ja'apar, 50</div>
+          </div>
+          <div class="info-item family-member sister">
+            <div class="info-label">Sister</div>
+            <div class="info-content">Nurfarhanah Zulaikha, 24</div>
+          </div>
+          <div class="info-item family-member sister">
+            <div class="info-label">Sister</div>
+            <div class="info-content">Nurfarhanah Najwa, 21</div>
+          </div>
+          <div class="info-item family-member brother">
+            <div class="info-label">Brother</div>
+            <div class="info-content">Muhammad Farhan Zakwan,16</div>
+          </div>
+           <div class="info-item family-member sister">
+            <div class="info-label">Sister</div>
+            <div class="info-content">Nurfarhanah Nawwarah, 11</div>
+          </div>
+        </div>
+        
+        <!-- Favorites Section -->
+        <div id="favorites" class="content-section">
+          <h2 class="section-title">My Favorite Things</h2>
+          <div class="info-item favorite-item book">
+            <div class="info-label">Quetos</div>
+            <div class="info-content">Believe in yourself,your tiredness,your patience,your pain will be replaced by happiness</div>
+          </div>
+          <div class="info-item favorite-item camera">
+            <div class="info-label">Games</div>
+            <div class="info-content">Valorant,Roblox</div>
+          </div>
+          <div class="info-item favorite-item movie">
+            <div class="info-label">Movie genre</div>
+            <div class="info-content">Horror,Action</div>
+          </div>
+          <div class="info-item favorite-item book">
+            <div class="info-label">Music</div>
+            <a href="https://www.youtube.com/watch?v=75-Com9Bo_s&list=RDGMEM6CZm14o9sc-Q22TIneLI8gVM75-Com9Bo_s&start_radio=1">Best Part</a>
+          </div>
+          <div class="info-item favorite-item place">
+            <div class="info-label">Travel Destination</div>
+            <div class="info-content">Japan, Bali, South Korea</div>
+          </div>
+          <div class="info-item favorite-item movie ">
+            <div class="info-label">Favorite Random Video</div>
+            <a href="https://www.youtube.com/shorts/koxaMBfoGGY">Random 1</a>
+             <a href="https://www.tiktok.com/@yayabhang0/video/7475277343867587848?is_from_webapp=1&sender_device=pc&web_id=7181934568890516993">Random 2</a>
+             <a href="https://www.tiktok.com/@_pok_ro/video/7389234999167388929?is_from_webapp=1&sender_device=pc&web_id=7181934568890516993">Random 3</a>
+          </div>
+        </div>
+        
+        <div class="social-links">
+          <a href="#" class="social-icon">📱</a>
+          <a href="#" class="social-icon">📧</a>
+          <a href="#" class="social-icon">💼</a>
+          <a href="#" class="social-icon">📷</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+  © 2025 by Nurfarhanah💖
+</footer>
+
+
+  <script>
+    function showTab(tabId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(tabId).classList.add('active');
+      
+      // Add active class to clicked button
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>

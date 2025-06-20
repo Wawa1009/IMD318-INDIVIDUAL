@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Cute Biodata</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #ffe3e3, #ffd6ec);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .card-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 600px;
+    }
+
+    .card {
+      background: #fff0f5;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      backface-visibility: hidden;
+    }
+
+    .card-front {
+      transform: rotateY(0deg);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .card-container:hover .card-front {
+      transform: rotateY(-180deg);
+    }
+
+    .card-container:hover .card-back {
+      transform: rotateY(0deg);
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #ffb6b9;
+      margin-bottom: 20px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #ff6f91;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 16px;
+      color: #ff8fab;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .biodata-section {
+      text-align: left;
+      margin-top: 25px;
+    }
+
+    .biodata-item {
+      margin-bottom: 15px;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .biodata-item:nth-child(1) { animation-delay: 0.2s; }
+    .biodata-item:nth-child(2) { animation-delay: 0.4s; }
+    .biodata-item:nth-child(3) { animation-delay: 0.6s; }
+    .biodata-item:nth-child(4) { animation-delay: 0.8s; }
+    .biodata-item:nth-child(5) { animation-delay: 1.0s; }
+    .biodata-item:nth-child(6) { animation-delay: 1.2s; }
+
+    .biodata-label {
+      font-weight: 600;
+      color: #ff6f91;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .biodata-value {
+      color: #555;
+      padding-left: 15px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ffb6b9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background-color: #ff6f91;
+      transform: scale(1.1);
+    }
+
+    .flip-instruction {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #ff8fab;
+      font-size: 14px;
+      opacity: 0.7;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <div class="card card-front">
+      <img src="https://i.pinimg.com/736x/f3/7a/f5/f37af5eb0e145a91a0d2a9b512ab8ad5.jpg" alt="Profile Pic" class="profile-pic">
+      <h1>Farhanah Najwa</h1>
+      <div class="title">Web Developer & Designer</div>
+      <p>Hover over me to see my biodata!</p>
+      <div class="flip-instruction">👆 Hover to flip 👆</div>
+    </div>
+    
+    <div class="card card-back">
+      <img src="https://i.pinimg.com/736x/f3/7a/f5/f37af5eb0e145a91a0d2a9b512ab8ad5.jpg" alt="Profile Pic" class="profile-pic">
+      <h1>My Biodata</h1>
+      
+      <div class="biodata-section">
+        <div class="biodata-item">
+          <span class="biodata-label">Full Name:</span>
+          <span class="biodata-value">Farhanah Najwa Binti Ahmad</span>
+        </div>
+        
+        <div class="biodata-item">
+          <span class="biodata-label">Date of Birth:</span>
+          <span class="biodata-value">12th June 1995</span>
+        </div>
+        
+        <div class="biodata-item">
+          <span class="biodata-label">Age:</span>
+          <span class="biodata-value">28 years</span>
+        </div>
+        
+        <div class="biodata-item">
+          <span class="biodata-label">Education:</span>
+          <span class="biodata-value">Bachelor's in Computer Science</span>
+        </div>
+        
+        <div class="biodata-item">
+          <span class="biodata-label">Hobbies:</span>
+          <span class="biodata-value">Drawing, Coding, Photography</span>
+        </div>
+        
+        <div class="biodata-item">
+          <span class="biodata-label">Contact:</span>
+          <span class="biodata-value">farhanah.najwa@example.com</span>
+        </div>
+      </div>
+      
+      <div class="social-links">
+        <a href="#" class="social-icon">📱</a>
+        <a href="#" class="social-icon">📧</a>
+        <a href="#" class="social-icon">💼</a>
+        <a href="#" class="social-icon">📷</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
